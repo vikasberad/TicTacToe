@@ -1,9 +1,9 @@
 board = [' ' for x in range[10]]
 
-def insertLetter(letter,pos):
+def insertLetter(l,pos):
     board[pos]= letter
 
-def printBoard(board):
+def printBoard(b):
     print('   |   |   ')
     print(' '+ board[1] + ' | '+ board[2] + '  |'+ board[3])
     print("-------------")
@@ -17,7 +17,7 @@ def printBoard(board):
 def spaceIsFree(pos):
     return board[pos] == ' '
     
-def isBoardFree(board):
+def isBoardFree(b):
     if board.count(' ')>1:
         return Falsel
     else:
