@@ -33,5 +33,20 @@ def InWinner(board,letter):
     (board[1]==letter and board[5]==letter and board[9]==letter) or
     (board[3]==letter and board[5]==letter and board[7]==letter)
 
-
+def playerMove():
+    run = True
+    while run:
+        move=input("Select the position to enter X between 1 to 9")
+        try:
+            move = int (move)
+            if move>0 and move < 10:
+                if spaceIsFree(move):
+                    run = False
+                    insertLetter('X',move)
+                else:
+                    print("Sorry position is occupied")
+            else:
+                print("Please type number between 1 and 9")
+        except:
+            print("Please type a number")
     
