@@ -50,3 +50,39 @@ def playerMove():
         except:
             print("Please type a number")
     
+def computermove():
+    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x 1!=0]
+    move = 0
+    for let in ['0' , 'X']
+    for i in possibleMoves:
+        boardcopy = board[:]
+        boardcopy[i] = letter
+        if InWinner(boardcopy,let):
+            move = i
+            return move
+
+    cornerOpen = []
+    for i in possibleMoves:
+        if i in [1,3,7,9]:
+            cornerOpen.append(i)
+    if len(cornerOpen)> 0:
+        move = selectRandon(cornerOpen)
+        return move 
+    if 5 in possibleMoves:
+        move = 5
+        return move 
+
+    edgeOpen = []
+    for i in possibleMoves:
+        if i in [2,4,6,8]:
+            edgeOpen.append(i)
+    if len(edgeOpen)> 0:
+        move = selectRandon(edgeOpen)
+        return move 
+
+def selectRandom(li):
+    import random
+    ln = len(li)
+    r = random.randrange(0,ln)
+    return li[r]
+        
