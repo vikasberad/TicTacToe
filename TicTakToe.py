@@ -86,3 +86,38 @@ def selectRandom(li):
     r = random.randrange(0,ln)
     return li[r]
         
+def main():
+    print("Welcome to the game!")
+    printBoard(board)
+
+    while not(isBoardFree(board)):
+        if not(isWinner(board , 'O')):
+            playerMove()
+            printBoard(board)
+        else:
+            print("sorry you loose!")
+            break
+
+        if not(isWinner(board , 'X')):
+            move = computerMove()
+            if move == 0:
+                print(" ")
+            else:
+                insertLetter('O' , move)
+                print('computer placed an o on position' , move , ':')
+                printBoard(board)
+        else:
+            print("you win!")
+            break
+
+        if isBoardFree(board):
+            print("Tie game")
+
+while True:
+    x = input("Do you want to play again? (y/n)")
+    if x.lower() == 'y':
+        board = [' ' for x in range(10)]
+        print('--------------------')
+        main()
+    else:
+        break
