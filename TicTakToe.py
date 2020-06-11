@@ -1,86 +1,79 @@
 board = [' ' for x in range(10)]
 
-def insertLetter(letter,pos):
+def insertLetter(letter, pos):
     board[pos] = letter
-
-def printBoard(board):
-    print('   |   |   ')
-    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
-    print('   |   |   ')
-    print('------------')
-    print('   |   |   ')
-    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
-    print('   |   |   ')
-    print('------------')
-    print('   |   |   ')
-    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
-    print('   |   |   ')
 
 def spaceIsFree(pos):
     return board[pos] == ' '
 
-def isBoardFree(board):
-    if board.count(' ')>1:
-        return False
-    else:
-        return True
+def printBoard(board):
+    print('   |   |')
+    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
+    print('   |   |')
+    print('-----------')
+    print('   |   |')
+    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
+    print('   |   |')
+    print('-----------')
+    print('   |   |')
+    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
+    print('   |   |')
 
-def isWinner(board,letter):
-    return ((board[1]==letter and board[2]==letter and board[3]==letter) or
-    (board[4]==letter and board[5]==letter and board[6]==letter) or
-    (board[7]==letter and board[8]==letter and board[9]==letter) or
-    (board[1]==letter and board[4]==letter and board[7]==letter) or
-    (board[2]==letter and board[5]==letter and board[9]==letter) or
-    (board[3]==letter and board[6]==letter and board[9]==letter) or
-    (board[1]==letter and board[5]==letter and board[9]==letter) or
-    (board[3]==letter and board[5]==letter and board[7]==letter))
+def isWinner(bo, le):
+    return (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or(bo[1] == le and bo[4] == le and bo[7] == le) or(bo[2] == le and bo[5] == le and bo[8] == le) or(bo[3] == le and bo[6] == le and bo[9] == le) or(bo[1] == le and bo[5] == le and bo[9] == le) or(bo[3] == le and bo[5] == le and bo[7] == le)
 
 def playerMove():
     run = True
     while run:
-        move=input("Select the position to enter X between 1 to 9")
+        move = input('Please select a position to place an \'X\' (1-9): ')
         try:
-            move = int (move)
-            if move>0 and move < 10:
+            move = int(move)
+            if move > 0 and move < 10:
                 if spaceIsFree(move):
                     run = False
-                    insertLetter('X',move)
+                    insertLetter('X', move)
                 else:
-                    print("Sorry position is occupied")
+                    print('Sorry, this space is occupied!')
             else:
-                print("Please type number between 1 and 9")
+                print('Please type a number within the range!')
         except:
-            print("Please type a number")
+            print('Please type a number!')
 
-def computerMove():
-    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x!=0]
+
+def compMove():
+    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
     move = 0
-    for let in ['O' , 'X']:
+
+    for let in ['O', 'X']:
         for i in possibleMoves:
-            boardcopy = board[:]
-            boardcopy[i] = let
-            if isWinner(boardcopy, let):
+            boardCopy = board[:]
+            boardCopy[i] = let
+            if isWinner(boardCopy, let):
                 move = i
                 return move
 
-    cornerOpen = []
+    cornersOpen = []
     for i in possibleMoves:
         if i in [1,3,7,9]:
-            cornerOpen.append(i)
-    if len(cornerOpen)> 0:
-        move = selectRandom(cornerOpen)
+            cornersOpen.append(i)
+
+    if len(cornersOpen) > 0:
+        move = selectRandom(cornersOpen)
         return move
+
     if 5 in possibleMoves:
         move = 5
         return move
 
-    edgeOpen = []
+    edgesOpen = []
     for i in possibleMoves:
         if i in [2,4,6,8]:
-            edgeOpen.append(i)
-    if len(edgeOpen)> 0:
-        move = selectRandom(edgeOpen)
-        return move
+            edgesOpen.append(i)
+
+    if len(edgesOpen) > 0:
+        move = selectRandom(edgesOpen)
+
+    return move
 
 def selectRandom(li):
     import random
@@ -88,38 +81,45 @@ def selectRandom(li):
     r = random.randrange(0,ln)
     return li[r]
 
+
+def isBoardFull(board):
+    if board.count(' ') > 1:
+        return False
+    else:
+        return True
+
 def main():
-    print("Welcome to Vikas's Game Arena!")
+    print('Welcome to Tic Tac Toe!')
     printBoard(board)
 
-    while not(isBoardFree(board)):
-        if not(isWinner(board , 'O')):
+    while not(isBoardFull(board)):
+        if not(isWinner(board, 'O')):
             playerMove()
             printBoard(board)
         else:
-            print("sorry you loose!")
+            print('Sorry, O\'s won this time!')
             break
 
-        if not(isWinner(board , 'X')):
-            move = computerMove()
+        if not(isWinner(board, 'X')):
+            move = compMove()
             if move == 0:
-                print(" ")
+                print('Tie Game!')
             else:
-                insertLetter('O' , move)
-                print('computer placed an o on position' , move , ':')
+                insertLetter('O', move)
+                print('Computer placed an \'O\' in position', move , ':')
                 printBoard(board)
         else:
-            print("you win!")
+            print('X\'s won this time! Good Job!')
             break
 
-        if isBoardFree(board):
-            print("Tie game")
+    if isBoardFull(board):
+        print('Tie Game!')
 
 while True:
-    x = input("Do you want to play again? (y/n)")
-    if x.lower() == 'y':
+    answer = input('Do you want to play again? (Y/N)')
+    if answer.lower() == 'y' or answer.lower == 'yes':
         board = [' ' for x in range(10)]
-        print('--------------------')
+        print('-----------------------------------')
         main()
     else:
         break
